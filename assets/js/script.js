@@ -4,19 +4,28 @@ var APIKey = "e4355a4446dc417d0aad89e95bf488f5";
 var queryURL =
   "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + APIKey;
 
-var cityInput = $("#city-input");
-var searchBtn = $("#search-button");
+var city = $("#city-input");
+var searchForm = document.querySelector("#searchtwo");
+searchForm.addEventListener("submit", searchHandler);
+console.log("searchForm = ", searchForm);
 var searchResults = $("search-results");
 var searchHistory = $("#search-history");
 var currentCity;
 
-// function to retrieve data from API
+// function to retrieve data from API and display in todays-weather div
 function getWeather(data) {
+  var queryURL =
+    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    data +
+    "&appid=" +
+    APIKey;
+  console.log(queryURL);
   fetch(queryURL)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
+      console.log("data = ", data);
       var todaysWeather = $("#todays-weather");
       todaysWeather.addClass("border-border-primary");
 
@@ -36,7 +45,7 @@ function getWeather(data) {
         "src",
         "http://openweathermap.org/img/wn/" + currentWeatherIcon + ".png"
       );
-      cityName.appen(currentWeatherIcon);
+      cityName.append(currentWeatherIcon);
 
       var currentTemp = data.current.temp;
       var currentTempEl = $("<p>");
@@ -45,12 +54,31 @@ function getWeather(data) {
 
       var currentWind = data.current.wind_speed;
       var currentWindEl = $("<p>");
-      currentWindEl.text(`Wind: ${currentWind} KPH`);
+      currentWindEl.text(`Wind: ${currentWind} MPH`);
       todaysWeather.append(currentWindEl);
 
       var currentHumidity = data.current.humidity;
       var currentHumidityEl = $("<p>");
       currentHumidityEl.text(`Humidity: ${currentHumidity}%`);
       currentConditionsEl.append(currentHumidityEl);
+      fetch();
+      // creating the cards for the five day forecast
+      var fiveDayForecast = $("#five-day-forecast");
+      var fiveDayHeader = $("<h2>");
+      fiveDayHeader.text("Five Day Forecast");
+      fiveDayForecast.append(fiveDayHeader);
+
+      var fiveDayCards = $("#five-day-cards");
+
+      for (var i = 1; i <= 5; i++) {}
     });
+}
+
+function searchHandler(event) {
+  event.preventDefault();
+  console.log("searchHandler");
+  var cityInputEL = document.getElementById("city-input");
+  currentCity = cityInputEL.value.trim();
+  console.log(currentCity);
+  getWeather(currentCity);
 }
