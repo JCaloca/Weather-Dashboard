@@ -11,7 +11,7 @@ var currentCity;
 // function to retrieve data from API and display in todays-weather div
 function getWeatherForecast(data) {
   var queryURL =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     data +
     "&appid=" +
     APIKey;
@@ -20,7 +20,7 @@ function getWeatherForecast(data) {
       return response.json();
     })
     .then(function (data) {
-      var forecastURL = `http://api.openweathermap.org/data/2.5/forecast?lat=${data[0].lat}&lon=${data[0].lon}&units=imperial&appid=${APIKey}`;
+      var forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${data[0].lat}&lon=${data[0].lon}&units=imperial&appid=${APIKey}`;
 
       fetch(forecastURL)
         .then(function (response) {
@@ -61,7 +61,7 @@ function getWeatherForecast(data) {
             var cardContent = document.createElement("div");
             cardContent.classList.add("card-body");
             cardContent.innerHTML = `<h6>${date}</h6>
-                              <img src= "http://openweathermap.org/img/wn/${icon}.png"> </><br>
+                              <img src= "https://openweathermap.org/img/wn/${icon}.png"> </><br>
                                ${temp}°F<br>
                                ${wind} MPH <br>
                                ${humidity}%`;
@@ -71,7 +71,7 @@ function getWeatherForecast(data) {
           }
         });
 
-      var currentWeatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${data[0].lat}&lon=${data[0].lon}&units=imperial&appid=${APIKey}`;
+      var currentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${data[0].lat}&lon=${data[0].lon}&units=imperial&appid=${APIKey}`;
 
       fetch(currentWeatherURL)
         .then(function (response) {
@@ -95,7 +95,7 @@ function getWeatherForecast(data) {
           var currentWeatherIconEl = $("<img>");
           currentWeatherIconEl.attr(
             "src",
-            "http://openweathermap.org/img/wn/" + currentWeatherIcon + ".png"
+            "https://openweathermap.org/img/wn/" + currentWeatherIcon + ".png"
           );
           cityNameEl.append(currentWeatherIconEl);
 
